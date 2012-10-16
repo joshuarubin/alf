@@ -32,6 +32,8 @@ module.exports = (robot) ->
     if lowerMentionName.charAt(0) is "@"
       lowerMentionName = lowerMentionName.substr(1)
 
+    console.log("usersForMentionName", lowerMentionName)
+
     for user in matchedUsers
       return [user] if user.name.toLowerCase() is lowerMentionName or
         user.mention_name.toLowerCase() is lowerMentionName
@@ -51,9 +53,9 @@ module.exports = (robot) ->
         user = users[0]
         user.roles = user.roles or [ ]
         if user.roles.length > 0
-          msg.send "#{name} is #{user.roles.join(", ")}."
+          msg.send "@#{user.mention_name} is #{user.roles.join(", ")}."
         else
-          msg.send "#{name} is nothing to me."
+          msg.send "@#{user.mention_name} is nothing to me."
       else if users.length > 1
         msg.send getAmbiguousUserText users
       else
@@ -77,7 +79,7 @@ module.exports = (robot) ->
             if name.toLowerCase() is robot.name
               msg.send "Ok, I am #{newRole}."
             else
-              msg.send "Ok, #{name} is #{newRole}."
+              msg.send "Ok, @#{user.mention_name} is #{newRole}."
         else if users.length > 1
           msg.send getAmbiguousUserText users
         else
@@ -97,7 +99,7 @@ module.exports = (robot) ->
           msg.send "I know."
         else
           user.roles = (role for role in user.roles when role isnt newRole)
-          msg.send "Ok, #{name} is no longer #{newRole}."
+          msg.send "Ok, @#{user.mention_name} is no longer #{newRole}."
       else if users.length > 1
         msg.send getAmbiguousUserText users
       else
