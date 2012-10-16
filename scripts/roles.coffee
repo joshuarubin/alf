@@ -19,6 +19,8 @@ module.exports = (robot) ->
     if lowerMentionName.charAt(0) is "@"
       lowerMentionName = lowerMentionName.substr(1)
 
+    console.log("usersForRawMentionName", lowerMentionName)
+
     user for key, user of (robot.users() or {}) when (
       user.name.toLowerCase().lastIndexOf(lowerMentionName, 0) == 0 or
         user.mention_name.toLowerCase().lastIndexOf(lowerMentionName, 0) == 0)
