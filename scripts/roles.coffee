@@ -66,8 +66,7 @@ module.exports = (robot) ->
             msg.send "I know"
           else
             user.roles.push(newRole)
-            if name.toLowerCase() is robot.name.toLowerCase() or
-            name.toLowerCase() is robot.mention_name.toLowerCase()
+            if name.toLowerCase() is robot.name.toLowerCase()
               msg.send "Ok, I am #{newRole}."
             else
               msg.send "Ok, @#{user.mention_name} is #{newRole}."
