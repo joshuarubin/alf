@@ -20,7 +20,7 @@ module.exports = (robot) ->
         user.mention_name.toLowerCase().lastIndexOf(lowerMentionName.substring(1), 0) == 0)
 
   usersForMentionName = (mentionName) ->
-    matchedUsers = @usersForRawMentionName(mentionName)
+    matchedUsers = usersForRawMentionName(mentionName)
     lowerMentionName = mentionName.toLowerCase()
     for user in matchedUsers
       return [user] if user.name.toLowerCase() is lowerMentionName or
