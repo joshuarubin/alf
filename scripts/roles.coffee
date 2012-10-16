@@ -35,7 +35,7 @@ module.exports = (robot) ->
     matchedUsers
 
   robot.respond /who is @?([\w .-]+)\?*$/i, (msg) ->
-    name = msg.match[1]
+    name = msg.match[1].trim()
     console.log("who is", name)
 
     if name is "you"
@@ -59,6 +59,7 @@ module.exports = (robot) ->
   robot.respond /@?([\w .-_]+) is (["'\w: -_]+)[.!]*$/i, (msg) ->
     name    = msg.match[1].trim()
     newRole = msg.match[2].trim()
+    console.log("blah", name, newRole)
 
     unless name in ['', 'who', 'what', 'where', 'when', 'why']
       unless newRole.match(/^not\s+/i)
