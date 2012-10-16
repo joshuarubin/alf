@@ -11,7 +11,11 @@
 
   "repository" : {
     "type": "git",
-    "url":  "https://github.com/github/hubot.git"
+    "url":  "https://github.com/joshuarubin/hubot.git"
+  },
+
+  "engines" : {
+    "node": "0.8.12"
   },
 
   "dependencies": {
