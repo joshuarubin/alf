@@ -38,13 +38,10 @@ module.exports = (robot) ->
     name = msg.match[1]
     console.log("who is", name)
 
-    console.log("before 0", name, robot.name, robot.mention_name)
     if name is "you"
       msg.send "Who ain't I?"
     else if name.toLowerCase() is robot.name.toLowerCase()
       msg.send "The best."
-    else if name.toLowerCase() is robot.mention_name.toLowerCase()
-      msg.send "You found me!"
     else
       users = usersForMentionName(name)
       if users.length is 1
