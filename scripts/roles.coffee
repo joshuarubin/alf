@@ -20,7 +20,7 @@ module.exports = (robot) ->
 
     user for key, user of (robot.users() or {}) when (
       user.name.toLowerCase().lastIndexOf(lowerMentionName, 0) == 0 or
-        user.mention_name.toLowerCase().lastIndexOf(lowerMentionName, 0) == 0)
+      user.mention_name.toLowerCase().lastIndexOf(lowerMentionName, 0) == 0)
 
   usersForMentionName = (mentionName) ->
     matchedUsers = usersForRawMentionName(mentionName)
@@ -30,7 +30,7 @@ module.exports = (robot) ->
 
     for user in matchedUsers
       return [user] if user.name.toLowerCase() is lowerMentionName or
-        user.mention_name.toLowerCase() is lowerMentionName
+      user.mention_name.toLowerCase() is lowerMentionName
 
     matchedUsers
 
