@@ -13,6 +13,21 @@ module.exports = (robot) ->
   getAmbiguousUserText = (users) ->
     "Be more specific, I know #{users.length} people named like that: #{(user.name for user in users).join(", ")}"
 
+  usersForRawMentionName = (mentionName) ->
+    lowerMentionName = mentionName.toLowerCase()
+    user for key, user of (robot.users() or {}) when (
+      user.name.toLowerCase().lastIndexOf(lowerMentionName, 0) == 0 or
+        user.mention_name.toLowerCase().lastIndexOf(lowerMentionName.substring(1), 0) == 0)
+
+  usersForMentionName = (mentionName) ->
+    matchedUsers = @usersForRawMentionName(mentionName)
+    lowerMentionName = mentionName.toLowerCase()
+    for user in matchedUsers
+      return [user] if user.name.toLowerCase() is lowerMentionName or
+        user.mention_name.toLowerCase() is lowerMentionName.substring(1)
+
+    matchedUsers
+
   robot.respond /who is @?([\w .-]+)\?*$/i, (msg) ->
     name = msg.match[1]
 
@@ -21,7 +36,7 @@ module.exports = (robot) ->
     else if name is robot.name
       msg.send "The best."
     else
-      users = robot.usersForFuzzyName(name)
+      users = usersForMentionName(name)
       if users.length is 1
         user = users[0]
         user.roles = user.roles or [ ]
@@ -40,7 +55,7 @@ module.exports = (robot) ->
 
     unless name in ['', 'who', 'what', 'where', 'when', 'why']
       unless newRole.match(/^not\s+/i)
-        users = robot.usersForFuzzyName(name)
+        users = usersForMentionName(name)
         if users.length is 1
           user = users[0]
           user.roles = user.roles or [ ]
@@ -63,7 +78,7 @@ module.exports = (robot) ->
     newRole = msg.match[2].trim()
 
     unless name in ['', 'who', 'what', 'where', 'when', 'why']
-      users = robot.usersForFuzzyName(name)
+      users = usersForMentionName(name)
       if users.length is 1
         user = users[0]
         user.roles = user.roles or [ ]
