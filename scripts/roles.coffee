@@ -18,14 +18,6 @@ module.exports = (robot) ->
     lowerMentionName = mentionName.toLowerCase()
     console.log("usersForRawMentionName 1", lowerMentionName)
 
-    if lowerMentionName.charAt(0) is "@"
-      lowerMentionName = lowerMentionName.substr(1)
-      console.log("usersForRawMentionName 2", lowerMentionName)
-      user for key, user of (robot.users() or {}) when (
-          user.mention_name.toLowerCase().lastIndexOf(lowerMentionName, 0) == 0)
-
-    console.log("usersForRawMentionName no @", lowerMentionName)
-
     user for key, user of (robot.users() or {}) when (
       user.name.toLowerCase().lastIndexOf(lowerMentionName, 0) == 0 or
         user.mention_name.toLowerCase().lastIndexOf(lowerMentionName, 0) == 0)
@@ -35,12 +27,6 @@ module.exports = (robot) ->
     lowerMentionName = mentionName.toLowerCase()
 
     console.log("usersForMentionName 0", lowerMentionName)
-
-    if lowerMentionName.charAt(0) is "@"
-      lowerMentionName = lowerMentionName.substr(1)
-      for user in matchedUsers
-        console.log("usersForMentionName test", user.mention_name.toLowerCase(), lowerMentionName)
-        return [user] if user.mention_name.toLowerCase() is lowerMentionName
 
     for user in matchedUsers
       return [user] if user.name.toLowerCase() is lowerMentionName or
@@ -52,11 +38,12 @@ module.exports = (robot) ->
     name = msg.match[1]
     console.log("who is", name)
 
+    console.log("before 0", name, robot.name, robot.mention_name)
     if name is "you"
       msg.send "Who ain't I?"
     else if name.toLowerCase() is robot.name.toLowerCase()
       msg.send "The best."
-    else if name.toLowerCase() is robot.mention_name.toLowerCase() or "@" + name.toLowerCase() is robot.mention_name.toLowerCase()
+    else if name.toLowerCase() is robot.mention_name.toLowerCase()
       msg.send "You found me!"
     else
       users = usersForMentionName(name)
@@ -87,9 +74,9 @@ module.exports = (robot) ->
             msg.send "I know"
           else
             user.roles.push(newRole)
+            console.log("before 1", name, robot.name, robot.mention_name)
             if name.toLowerCase() is robot.name.toLowerCase() or
-              name.toLowerCase() is robot.mention_name.toLowerCase() or
-              name.toLowerCase() is "@" + robot.mention_name.toLowerCase() or
+              name.toLowerCase() is robot.mention_name.toLowerCase()
               msg.send "Ok, I am #{newRole}."
             else
               msg.send "Ok, @#{user.mention_name} is #{newRole}."
