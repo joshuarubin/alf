@@ -14,9 +14,7 @@ module.exports = (robot) ->
     "Be more specific, I know #{users.length} people named like that: #{(user.name for user in users).join(", ")}"
 
   usersForRawMentionName = (mentionName) ->
-    console.log("usersForRawMentionName 0", mentionName)
     lowerMentionName = mentionName.toLowerCase()
-    console.log("usersForRawMentionName 1", lowerMentionName)
 
     user for key, user of (robot.users() or {}) when (
       user.name.toLowerCase().lastIndexOf(lowerMentionName, 0) == 0 or
@@ -26,8 +24,6 @@ module.exports = (robot) ->
     matchedUsers = usersForRawMentionName(mentionName)
     lowerMentionName = mentionName.toLowerCase()
 
-    console.log("usersForMentionName 0", lowerMentionName)
-
     for user in matchedUsers
       return [user] if user.name.toLowerCase() is lowerMentionName or
       user.mention_name.toLowerCase() is lowerMentionName
@@ -36,7 +32,6 @@ module.exports = (robot) ->
 
   robot.respond /who is @?([\w \-]+)/i, (msg) ->
     name = msg.match[1].trim()
-    console.log("who is", name)
 
     if name is "you"
       msg.send "Who ain't I?"
@@ -59,7 +54,6 @@ module.exports = (robot) ->
   robot.respond /@?([\w .\-]+) is (["'\w \-]+)/i, (msg) ->
     name    = msg.match[1].trim()
     newRole = msg.match[2].trim()
-    console.log("blah", name, newRole)
 
     unless name in ['', 'who', 'what', 'where', 'when', 'why']
       unless newRole.match(/^not\s+/i)
@@ -72,7 +66,6 @@ module.exports = (robot) ->
             msg.send "I know"
           else
             user.roles.push(newRole)
-            console.log("before 1", name, robot.name, robot.mention_name)
             if name.toLowerCase() is robot.name.toLowerCase() or
             name.toLowerCase() is robot.mention_name.toLowerCase()
               msg.send "Ok, I am #{newRole}."
