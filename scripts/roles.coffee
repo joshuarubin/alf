@@ -15,6 +15,8 @@ module.exports = (robot) ->
 
   usersForRawMentionName = (mentionName) ->
     lowerMentionName = mentionName.toLowerCase()
+    console.log("func", robot.users())
+    console.log("prop", robot.users)
     user for key, user of (robot.users() or {}) when (
       user.name.toLowerCase().lastIndexOf(lowerMentionName, 0) == 0 or
         "@" + user.mention_name.toLowerCase().lastIndexOf(lowerMentionName, 0) == 0)
