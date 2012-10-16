@@ -1,14 +1,12 @@
-# Description:
-#   Assign roles to people you're chatting with
+# Assign roles to people you're chatting with
 #
-# Commands:
-#   hubot <user> is a badass guitarist - assign a role to a user
-#   hubot <user> is not a badass guitarist - remove a role from a user
-#   hubot who is <user> - see what roles a user has
+# <user> is a badass guitarist - assign a role to a user
+# <user> is not a badass guitarist - remove a role from a user
+# who is <user> - see what roles a user has
+
+# hubot holman is an ego surfer
+# hubot holman is not an ego surfer
 #
-# Examples:
-#   hubot holman is an ego surfer
-#   hubot holman is not an ego surfer
 
 module.exports = (robot) ->
 
@@ -16,8 +14,7 @@ module.exports = (robot) ->
     "Be more specific, I know #{users.length} people named like that: #{(user.name for user in users).join(", ")}"
 
   robot.respond /who is @?([\w .-]+)\?*$/i, (msg) ->
-    joiner = ', '
-    name = msg.match[1].trim()
+    name = msg.match[1]
 
     if name is "you"
       msg.send "Who ain't I?"
@@ -29,9 +26,7 @@ module.exports = (robot) ->
         user = users[0]
         user.roles = user.roles or [ ]
         if user.roles.length > 0
-          if user.roles.join('').search(',') > -1
-            joiner = '; '
-          msg.send "#{name} is #{user.roles.join(joiner)}."
+          msg.send "#{name} is #{user.roles.join(", ")}."
         else
           msg.send "#{name} is nothing to me."
       else if users.length > 1
