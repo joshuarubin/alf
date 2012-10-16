@@ -17,14 +17,14 @@ module.exports = (robot) ->
     lowerMentionName = mentionName.toLowerCase()
     user for key, user of (robot.users() or {}) when (
       user.name.toLowerCase().lastIndexOf(lowerMentionName, 0) == 0 or
-        user.mention_name.toLowerCase().lastIndexOf(lowerMentionName.substring(1), 0) == 0)
+        "@" + user.mention_name.toLowerCase().lastIndexOf(lowerMentionName, 0) == 0)
 
   usersForMentionName = (mentionName) ->
     matchedUsers = usersForRawMentionName(mentionName)
     lowerMentionName = mentionName.toLowerCase()
     for user in matchedUsers
       return [user] if user.name.toLowerCase() is lowerMentionName or
-        user.mention_name.toLowerCase() is lowerMentionName.substring(1)
+        "@" + user.mention_name.toLowerCase() is lowerMentionName
 
     matchedUsers
 
