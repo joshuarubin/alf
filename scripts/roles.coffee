@@ -15,10 +15,11 @@ module.exports = (robot) ->
 
   usersForRawMentionName = (mentionName) ->
     lowerMentionName = mentionName.toLowerCase()
+    console.log("usersForRawMentionName 0", lowerMentionName)
 
     if lowerMentionName.charAt(0) is "@"
       lowerMentionName = lowerMentionName.substr(1)
-      console.log("usersForRawMentionName", lowerMentionName)
+      console.log("usersForRawMentionName 1", lowerMentionName)
       user for key, user of (robot.users() or {}) when (
           user.mention_name.toLowerCase().lastIndexOf(lowerMentionName, 0) == 0)
 
@@ -32,12 +33,12 @@ module.exports = (robot) ->
     matchedUsers = usersForRawMentionName(mentionName)
     lowerMentionName = mentionName.toLowerCase()
 
-    console.log("usersForMentionName", lowerMentionName)
+    console.log("usersForMentionName 0", lowerMentionName)
 
     if lowerMentionName.charAt(0) is "@"
       lowerMentionName = lowerMentionName.substr(1)
       for user in matchedUsers
-        console.log("usersForMentionName testing", user.mention_name.toLowerCase(), lowerMentionName)
+        console.log("usersForMentionName test", user.mention_name.toLowerCase(), lowerMentionName)
         return [user] if user.mention_name.toLowerCase() is lowerMentionName
 
     for user in matchedUsers
