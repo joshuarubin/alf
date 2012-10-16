@@ -56,7 +56,7 @@ module.exports = (robot) ->
       else
         msg.send "#{name}? Never heard of 'em"
 
-  robot.respond /@?([\w .-]+) is (["'\w -]+)[.!:]*$/i, (msg) ->
+  robot.respond /@?([\w .-]+) is (["'\w -]+)[.!]*$/i, (msg) ->
     name    = msg.match[1].trim()
     newRole = msg.match[2].trim()
     console.log("blah", name, newRole)
@@ -83,7 +83,7 @@ module.exports = (robot) ->
         else
           msg.send "I don't know anything about #{name}."
 
-  robot.respond /@?([\w .-]+) is not (["'\w -]+)[.!:]*$/i, (msg) ->
+  robot.respond /@?([\w .-]+) is not (["'\w -]+)[.!]*$/i, (msg) ->
     name    = msg.match[1].trim()
     newRole = msg.match[2].trim()
 
