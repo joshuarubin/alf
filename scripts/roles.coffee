@@ -76,7 +76,7 @@ module.exports = (robot) ->
             user.roles.push(newRole)
             console.log("before 1", name, robot.name, robot.mention_name)
             if name.toLowerCase() is robot.name.toLowerCase() or
-              name.toLowerCase() is robot.mention_name.toLowerCase()
+            name.toLowerCase() is robot.mention_name.toLowerCase()
               msg.send "Ok, I am #{newRole}."
             else
               msg.send "Ok, @#{user.mention_name} is #{newRole}."
